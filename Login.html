@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Login V16</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="css/util.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+<!--===============================================================================================-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<script>
+
+	$(document).ready(function(){   
+	// handle button clicks         
+  $('#buttonID').click(function() {
+		// make an ajax call
+		alert($('#formID').serialize());
+    $.ajax({
+            dataType: 'jsonp',
+            jsonpCallback: '_wrapper',
+            data: $('#formID').serialize(),
+            type: 'POST',
+            url: "http://127.0.0.1:8787/Login",
+            success: handleButtonResponse,
+        });
+    });
+    function handleButtonResponse(data){
+      alert(data);
+      // parse the json string
+      var jsonObject = JSON.parse(data);
+      $('#reponseID').append( jsonObject.message );
+    }
+  
+  
+	$("#buttonme").click(function(){
+		alert("Loading now, please wait.");
+		var tempName, tempPassword;
+		
+		tempName=$("#Name").val();
+		tempPassword=$("#Password").val();
+		
+		var mydata="&name="+tempName+"&password="+tempPassword;
+		
+			if(tempName == "" || tempPassword == "")
+		{
+			alert("Please fill in all the blanks.");
+		}
+		else
+		{
+			$.ajax({
+				url: "http://127.0.0.1:8787/Login", 
+				type: 'POST',
+				data: mydata,
+				success: function(result){
+				if (result == "fail") {
+					alert("Not have this user, please check your username");
+					}else{
+					alert("Login success");
+					alert("Welcome    "+result);
+					localStorage.setItem("name", result);
+							window.location.href = "http://127.0.0.1:8787/index";
+					}
+					}, error: function (xhr, textStatus, errorThrown) {
+						alert("Login failed, please check your username and password");
+						console.log(textStatus);
+      		}
+				});
+			}
+	});
+});
+
+</script>
+<body>
+	
+	
+		<div class="container-login100" style="background-image: url('images/bg-01.jpg');">
+			<div class="wrap-login100 p-t-30 p-b-50">
+				<span class="login100-form-title p-b-41">
+					Account Login
+				</span>
+				
+
+					<div class="wrap-input100 validate-input" data-validate = "Enter username">
+						<input class="input100" type="text" id="Name" 
+						name="username" placeholder="User name">
+						<span class="focus-input100" data-placeholder="&#xe82a;"></span>
+					</div>
+
+					<div class="wrap-input100 validate-input" data-validate="Enter password">
+						<input class="input100" type="password" id="Password"
+						name="pass" placeholder="Password">
+						<span class="focus-input100" data-placeholder="&#xe80f;"></span>
+					</div>
+
+					<div class="container-login100-form-btn m-t-32">
+						<button class="login100-form-btn" id="buttonme">
+							Login
+						</button>
+							
+					</div>							
+					
+					<div class="container-login100-form-btn m-t-32">
+					<button><a href="http://127.0.0.1:8787/Register" class="login100-form-btn">Register</a></button>
+				
+			</div>
+		</div>
+		
+</body>
+</html>

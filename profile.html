@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Profile</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="vendor/simple-line-icons/css/simple-line-icons.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="img/core-img/favicon.ico">
+  </head>
+  <script>
+  
+  //***************************************************************************//  
+  //click button to remove data  
+  function remove(deldata) {
+		var tempName, tempdelfav;
+		tempName = localStorage.getItem("name");
+		tempdelfav = $("#favorite_list").val();
+		var delData="&name="+tempName+"&favlist="+tempdelfav;
+
+		
+		var delData="&name="+tempName+"favlist"+tempdelfav;
+
+        $.ajax({
+           url: "http://127.0.0.1:8787/removefavourlist",          
+           type: "POST",
+           data: delData ,
+     
+         });
+		 alert("data deleted!");
+			  location.reload();
+	}
+	
+	//***************************************************************************//  	
+   $(document).ready(function(){
+	 var favlist = [];
+	 var favitem = 0;
+	 
+	 var favlist2 = [];
+	 var favitem2 = 0;
+	 
+	 var favlist3 = [];
+	 var favitem3 = 0;
+	 
+	 var favlist4 = [];
+	 var favitem4 = 0;
+	 
+	 var favlist1 = [];
+	 var favitem1 = 0;
+	 
+	//***************************************************************************//  		
+	// handle button clicks         
+  $('#buttonID').click(function() {
+		// make an ajax call
+		alert($('#formID').serialize());
+    $.ajax({
+            dataType: 'jsonp',
+            jsonpCallback: '_wrapper',
+            data: $('#formID').serialize(),
+            type: 'POST',
+            url: "http://127.0.0.1:8787/profile",
+            success: handleButtonResponse,
+        });
+    });
+	
+	//***************************************************************************//
+    function handleButtonResponse(data){
+      alert(data);
+      // parse the json string
+      var jsonObject = JSON.parse(data);
+      $('#reponseID').append( jsonObject.message );
+    }
+	
+    //**************************************************************************//
+    //password update	
+	$("#update").click(function(){
+	var tempOldPW, tempNewPW, tempRePW,tempUserName;
+	
+		tempUserName=localStorage.getItem("name");
+		tempOldPW=$("#oldPW").val();
+		tempNewPW=$("#newPW").val();
+		tempRePW=$("#rePW").val();
+		
+			var mydata=tempOldPW+","+tempNewPW+","+tempUserName;
+			if(tempOldPW == "" || tempNewPW == ""|| tempRePW == "")
+		{
+			alert("Please fill in all the blanks.");
+		}else if(tempNewPW!=tempRePW){
+		alert("The NEW password and Re-enter Password are different!Please enter again.");
+		}else
+		{
+			$.ajax({
+				url: "http://127.0.0.1:8787/update", 
+				type: 'POST',
+				data: mydata,
+				success: function(result){
+				if (result == "fail") {
+					alert("Invaild old password");
+					}else{				
+					localStorage.setItem("name", result);
+					alert("Password changed, you will back to login page");	
+					window.location.href = "http://127.0.0.1:8787/Login";
+					}
+					}, error: function (xhr, textStatus, errorThrown) {
+					}
+				});
+			}
+		});
+	
+
+
+	//************************************************************************************//
+		//show data which is user added 
+        var tempName;
+		tempName=localStorage.getItem("name");
+		var name="&name="+tempName;
+        
+        $.ajax({
+          url: "http://127.0.0.1:8787/readfavourlist",          
+          type: "POST",
+          data: name ,
+          success: function (result) {
+            result = JSON.parse(result);
+            $("#favlist").empty();
+            $.each(result, function(i,song){
+			
+			  var favourite = song.favorite_list;
+			  var favtype = song.type;		
+              favlist2[favitem2] = favourite;
+              favlist1[favitem1] = favtype;
+			  removelist=favourite+favtype;
+			  
+			  favitem+=1;
+			  //$("#favlist").append('<div class="container"><div class="row"><div class="col-1"></div><font color="Orange"><p>'+ favourite +'</p></font></div></div>');
+			   $("#favlist").append('<div class="row"><div class="col-md-6 col-lg-4"><div class="form-group wow fadeInUp"><input class="form-control"  type="text" readonly="readonly" value='+favourite+'>'+'</input></div></div>'+
+									'<div class="col-md-6 col-lg-4"><div class="form-group wow fadeInUp"><input class="form-control" type="text" readonly="readonly" value='+favtype+'>'+'</input></div></div>'+
+									"<button class='btn oneMusic-btn' Hig onClick='remove(\""+removelist+"\")'>Delete</button></div><br>"
+									);
+			});
+            console.log(result);
+            //alert(result);
+            },
+            error: function(result){
+              console.log(result);
+            }
+        });
+
+		$.ajax({
+
+			/////////////////////////////////////3/7  API/////////////////////////////////////
+			//   [] aray  {} object
+				type: 'GET',
+				url: 'https://data.weather.gov.hk/weatherAPI/opendata/earthquake.php?dataType=qem&lang=en',
+				dataType:"json",
+				data:"",
+				success: function(data, status, xhr) {
+	
+				information = "Earthquake time :" +data.updateTime +"<br>Location/Regoin -"+ data.region+"<br>lat="+data.lat+"<br>mag="+data.mag;
+				$("#information").html(information)
+		
+            },
+            error: function(xhr, status, error) {
+                console.log('Error: ' + error.message);
+            }
+        });		
+	});
+  </script>
+  
+  <body>
+    <!-- Navigation -->
+	    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="lds-ellipsis">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+
+    <!-- ##### Header Area Start ##### -->
+    <header class="header-area">
+        <!-- Navbar Area -->
+        <div class="oneMusic-main-menu">
+            <div class="classy-nav-container breakpoint-off">
+                <div class="container">
+                    <!-- Menu -->
+                    <nav class="classy-navbar justify-content-between" id="oneMusicNav">
+
+                        <!-- Nav brand -->
+                        <a href="index.html" class="nav-brand"><img src="img/core-img/logo.png" alt=""></a>
+
+                        <!-- Navbar Toggler -->
+                        <div class="classy-navbar-toggler">
+                            <span class="navbarToggler"><span></span><span></span><span></span></span>
+                        </div>
+
+                        <!-- Menu -->
+                        <div class="classy-menu">
+
+                            <!-- Close Button -->
+                            <div class="classycloseIcon">
+                                <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
+                            </div>
+
+                            <!-- Nav Start -->
+                            <div class="classynav">
+                                <ul>
+                                  <li><a href="http://127.0.0.1:8787/index">Home</a></li>
+                                    <li><a href="http://127.0.0.1:8787/albums">Albums</a></li>
+                                    <li><a href="#">Pages</a>
+                                        <ul class="dropdown">
+                                            <li><a href="index.html">Home</a></li>
+                                            <li><a href="http://127.0.0.1:8787/albums">Albums</a></li>
+                                            <li><a href="http://127.0.0.1:8787/contact">Contact</a></li>          
+                                        </ul>
+                                    </li>
+                                    <li><a href="http://127.0.0.1:8787/contact">Contact</a></li> 
+									<li><a href="http://127.0.0.1:8787/profile">Profile</a></li>
+                                </ul>
+
+                                <!-- Login/Register & Cart Button -->
+                                <div class="login-register-cart-button d-flex align-items-center">
+                                    <!-- Login/Register -->
+                                    <div class="login-register-btn mr-50">
+                                        <a href="http://127.0.0.1:8787/Login">Login / Register</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Nav End -->
+
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+	
+
+
+    <section class="contact-area section-padding-100 bg-img bg-overlay bg-fixed has-bg-img" style="background-image: url(img/bg-img/bg-2.jpg);">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="section-heading white wow fadeInUp" data-wow-delay="100ms">
+                        <p>Change your password</p>
+                        <h2 id="name">Welcome</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <!-- Contact Form Area -->
+                    <div class="contact-form-area">
+                        
+                            <div class="row">
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="form-group wow fadeInUp">
+                                        <input class="form-control" id="oldPW" placeholder="Your old password">
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="form-group wow fadeInUp" >
+                                        <input  class="form-control" id="newPW" placeholder="Enter new password">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group wow fadeInUp">
+                                        <input  class="form-control" id="rePW" placeholder="Re-enter new password">
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group wow fadeInUp" >
+                                        <button  class="btn oneMusic-btn mt-30" id="update" >Update Password</button>
+                                    </div>
+                                </div>                              
+                            </div>
+                     
+                    </div>
+				
+                </div>
+            </div>
+        </div>
+    </section>
+
+<section class="album-catagory section-padding-100-0">
+        <div class="container">
+		<marquee color="red" scrollamount="10px"><font size="10">Current Earthquake news:</font></marquee><br>
+           	<a id="information"></a>
+               
+                    <div class="section-heading style-2">
+                        <p>Your song list</p>
+						<hr>
+			
+						<a style="float:left">Song</a>
+						<a style="text-align:center">Type</a>
+						
+						<div class="ablums-text text-center mb-70" id="favlist"></div>
+                    </div>
+                 </div>
+</section>
+	
+	
+	<script src="js/jquery/jquery-2.2.4.min.js"></script>
+    <!-- Popper js -->
+    <script src="js/bootstrap/popper.min.js"></script>
+    <!-- Bootstrap js -->
+    <script src="js/bootstrap/bootstrap.min.js"></script>
+    <!-- All Plugins js -->
+    <script src="js/plugins/plugins.js"></script>
+    <!-- Active js -->
+    <script src="js/active.js"></script>
+		
+	
+
+
+		
+
+  </body>
+
+</html>

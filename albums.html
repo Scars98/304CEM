@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <!-- Title -->
+    <title>One Music - Modern Music HTML5 Template</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="img/core-img/favicon.ico">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+	
+	 <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="vendor/simple-line-icons/css/simple-line-icons.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+	
+   
+  </head>
+  <script>
+
+	$(document).ready(function(){   
+	 var favlist = [];
+	 var favitem = 0;
+	 
+	 var favlist2 = [];
+	 var favitem2 = 0;
+	  
+	// handle button clicks         
+  $('#buttonID').click(function() {
+		// make an ajax call
+		alert($('#formID').serialize());
+    $.ajax({
+            dataType: 'jsonp',
+            jsonpCallback: '_wrapper',
+            data: $('#formID').serialize(),
+            type: 'POST',
+            url: "http://127.0.0.1:8787/albums",
+            success: handleButtonResponse,
+        });
+    });
+    function handleButtonResponse(data){
+      alert(data);
+      // parse the json string
+      var jsonObject = JSON.parse(data);
+      $('#reponseID').append( jsonObject.message );
+    }
+
+	$("#add").click(function(){
+	
+	var tempName, tempfavlist, tempType;
+	tempName=localStorage.getItem("name");
+	tempfavlist=$("#favorite_list").val();
+	tempType=$("#type").val();
+	
+	var myfavdata="&name="+tempName+"&favorite_list="+tempfavlist+"&type="+ tempType;
+	
+	$.ajax({
+	type: "POST",
+	data:  myfavdata ,
+	url: "http://127.0.0.1:8787/add",
+	success: function (result) {
+		alert(result);
+		if (result == "OK") {
+		alert("The data was sent to server!");
+		} else {
+		alert("The data was sent to server");
+		alert("Your song= "+tempfavlist);
+		alert("type= "+tempType);
+	    
+		}
+		}, error: function (xhr, textStatus, errorThrown) {
+		alert("Favourite_List is lose");
+		console.log(textStatus);
+		}
+	});
+	});
+	});
+  </script>
+  <body>
+    <!-- Preloader -->
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="lds-ellipsis">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+
+    <!-- ##### Header Area Start ##### -->
+    <header class="header-area">
+        <!-- Navbar Area -->
+        <div class="oneMusic-main-menu">
+            <div class="classy-nav-container breakpoint-off">
+                <div class="container">
+                    <!-- Menu -->
+                    <nav class="classy-navbar justify-content-between" id="oneMusicNav">
+
+                        <!-- Nav brand -->
+                        <a href="index.html" class="nav-brand"><img src="img/core-img/logo.png" alt=""></a>
+
+                        <!-- Navbar Toggler -->
+                        <div class="classy-navbar-toggler">
+                            <span class="navbarToggler"><span></span><span></span><span></span></span>
+                        </div>
+
+                        <!-- Menu -->
+                        <div class="classy-menu">
+
+                            <!-- Close Button -->
+                            <div class="classycloseIcon">
+                                <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
+                            </div>
+
+                            <!-- Nav Start -->
+                            <div class="classynav">
+                                <ul>
+                                    <li><a href="http://127.0.0.1:8787/index">Home</a></li>
+                                    <li><a href="http://127.0.0.1:8787/albums">Albums</a></li>
+                                    <li><a href="#">Pages</a>
+                                        <ul class="dropdown">
+                                            <li><a href="index.html">Home</a></li>
+                                            <li><a href="http://127.0.0.1:8787/albums">Albums</a></li>
+                                            <li><a href="http://127.0.0.1:8787/contact">Contact</a></li>          
+                                        </ul>
+                                    </li>
+                                    <li><a href="http://127.0.0.1:8787/contact">Contact</a></li> 
+									<li><a href="http://127.0.0.1:8787/profile">Profile</a></li>
+            
+                                </ul>
+
+                                <!-- Login/Register & Cart Button -->
+                                <div class="login-register-cart-button d-flex align-items-center">
+                                    <!-- Login/Register -->
+                                    <div class="login-register-btn mr-50">
+                                        <a href="http://127.0.0.1:8787/Login">Login / Register</a>
+                                    </div>
+
+                                    <!-- Cart Button -->
+                                    
+                                </div>
+                            </div>
+                            <!-- Nav End -->
+
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- ##### Header Area End ##### -->
+
+    <!-- ##### Breadcumb Area Start ##### -->
+    <section class="breadcumb-area bg-img bg-overlay" style="background-image: url(img/bg-img/breadcumb3.jpg);">
+        <div class="bradcumbContent">
+            <p>See what’s new</p>
+            <h2>Latest Albums</h2>
+        </div>
+    </section>
+    <!-- ##### Breadcumb Area End ##### -->
+
+    <!-- ##### Album Catagory Area Start ##### -->
+     <section class="miscellaneous-area section-padding-100-0">
+        <div class="container">
+			 <div class="browse-by-catagories catagory-menu d-flex flex-wrap align-items-center mb-70">
+					<p> 
+					<p>Adding Song 
+					<input type= "text" style="width:600px;" id="favorite_list"></p><br>
+					<p>The type of song
+					<input type= "text" style="width:600px;" id="type"></p>
+					
+					<br>
+					<button class="btn oneMusic-btn" id="add">Save to list</button>
+					</p>
+                    </div>
+            <div class="row">
+                <!-- ***** Weeks Top ***** -->
+                <div class="col-12 col-lg-4">
+                    <div class="weeks-top-area mb-100">
+                        <div class="section-heading text-left mb-50 wow fadeInUp" data-wow-delay="50ms">
+                            <p>See what’s new</p>
+                            <h2>This week’s top</h2>
+                        </div>
+
+                        <!-- Single Top Item -->
+                        <div class="single-top-item d-flex wow fadeInUp" data-wow-delay="100ms">
+                            <div class="thumbnail">
+                                <img src="img/bg-img/wt1.jpg" alt="">
+                            </div>
+                            <div class="content-">
+                                <h6>Experience</h6>
+                                <p>Classical Music</p>
+                            </div>
+                        </div>
+
+                        <!-- Single Top Item -->
+                        <div class="single-top-item d-flex wow fadeInUp" data-wow-delay="150ms">
+                            <div class="thumbnail">
+                                <img src="img/bg-img/wt2.jpg" alt="">
+                            </div>
+                            <div class="content-">
+                                <h6>Sleepless Nights</h6>
+                                <p>J-pop</p>
+                            </div>
+                        </div>
+
+                        <!-- Single Top Item -->
+                        <div class="single-top-item d-flex wow fadeInUp" data-wow-delay="200ms">
+                            <div class="thumbnail">
+                                <img src="img/bg-img/wt3.jpg" alt="">
+                            </div>
+                            <div class="content-">
+                                <h6>Hynm for the weekend</h6>
+                                <p>Pop Music</p>
+                            </div>
+                        </div>
+
+                        <!-- Single Top Item -->
+                        <div class="single-top-item d-flex wow fadeInUp" data-wow-delay="250ms">
+                            <div class="thumbnail">
+                                <img src="img/bg-img/wt4.jpg" alt="">
+                            </div>
+                            <div class="content-">
+                                <h6>Something just like this</h6>
+                                <p>Pop Music</p>
+                            </div>
+                        </div>
+
+                        <!-- Single Top Item -->
+                        <div class="single-top-item d-flex wow fadeInUp" data-wow-delay="300ms">
+                            <div class="thumbnail">
+                                <img src="img/bg-img/wt5.jpg" alt="">
+                            </div>
+                            <div class="content-">
+                                <h6>Unlasting</h6>
+                                <p>J-pop</p>
+                            </div>
+                        </div>
+
+                        <!-- Single Top Item -->
+                        <div class="single-top-item d-flex wow fadeInUp" data-wow-delay="350ms">
+                            <div class="thumbnail">
+                                <img src="img/bg-img/wt6.jpg" alt="">
+                            </div>
+                            <div class="content-">
+                                <h6>Time</h6>
+                                <p>Classical Music</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- ***** New Hits Songs ***** -->
+                <div class="col-12 col-lg-4">
+                    <div class="new-hits-area mb-100">
+                        <div class="section-heading text-left mb-50 wow fadeInUp" data-wow-delay="50ms">
+                            <p>See what’s new</p>
+                            <h2>New Hits</h2>
+                        </div>
+
+                        <!-- Single Top Item -->
+                        <div class="single-new-item d-flex align-items-center justify-content-between wow fadeInUp" data-wow-delay="100ms">
+                            <div class="first-part d-flex align-items-center">
+                                <div class="thumbnail">
+                                    <img src="img/bg-img/wt7.jpg" alt="">
+                                </div>
+                                <div class="content-">
+                                    <h6>Shape of you</h6>
+                                    <p>Pop Songs</p>
+                                </div>
+                            </div>
+                    
+                        </div>
+
+                        <!-- Single Top Item -->
+                        <div class="single-new-item d-flex align-items-center justify-content-between wow fadeInUp" data-wow-delay="150ms">
+                            <div class="first-part d-flex align-items-center">
+                                <div class="thumbnail">
+                                    <img src="img/bg-img/wt8.jpg" alt="">
+                                </div>
+                                <div class="content-">
+                                    <h6>I truly believe</h6>
+                                    <p>C-Pop</p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Single Top Item -->
+                        <div class="single-new-item d-flex align-items-center justify-content-between wow fadeInUp" data-wow-delay="200ms">
+                            <div class="first-part d-flex align-items-center">
+                                <div class="thumbnail">
+                                    <img src="img/bg-img/wt9.jpg" alt="">
+                                </div>
+                                <div class="content-">
+                                    <h6>Hollow</h6>
+                                    <p>Game-Pop</p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Single Top Item -->
+                        <div class="single-new-item d-flex align-items-center justify-content-between wow fadeInUp" data-wow-delay="250ms">
+                            <div class="first-part d-flex align-items-center">
+                                <div class="thumbnail">
+                                    <img src="img/bg-img/wt10.jpg" alt="">
+                                </div>
+                                <div class="content-">
+                                    <h6>Closer</h6>
+                                    <p>Pop Song</p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Single Top Item -->
+                        <div class="single-new-item d-flex align-items-center justify-content-between wow fadeInUp" data-wow-delay="300ms">
+                            <div class="first-part d-flex align-items-center">
+                                <div class="thumbnail">
+                                    <img src="img/bg-img/wt11.jpg" alt="">
+                                </div>
+                                <div class="content-">
+                                    <h6>Una Mattina</h6>
+                                    <p>Classical Music</p>
+                                </div>
+                            </div>
+ 
+                        </div>
+
+                        <!-- Single Top Item -->
+                        <div class="single-new-item d-flex align-items-center justify-content-between wow fadeInUp" data-wow-delay="350ms">
+                            <div class="first-part d-flex align-items-center">
+                                <div class="thumbnail">
+                                    <img src="img/bg-img/wt12.jpg" alt="">
+                                </div>
+                                <div class="content-">
+                                    <h6>Ghost</h6>
+                                    <p>Game-Pop</p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ***** Popular Artists ***** -->
+                <div class="col-12 col-lg-4">
+                    <div class="popular-artists-area mb-100">
+                        <div class="section-heading text-left mb-50 wow fadeInUp" data-wow-delay="50ms">
+                            <p>See what’s new</p>
+                            <h2>Popular Artist</h2>
+                        </div>
+
+                        <!-- Single Artist -->
+                        <div class="single-artists d-flex align-items-center wow fadeInUp" data-wow-delay="100ms">
+                            <div class="thumbnail">
+                                <img src="img/bg-img/pa1.jpg" alt="">
+                            </div>
+                            <div class="content-">
+                                <p>Ludovico Einaudi</p>
+                            </div>
+                        </div>
+
+                        <!-- Single Artist -->
+                        <div class="single-artists d-flex align-items-center wow fadeInUp" data-wow-delay="150ms">
+                            <div class="thumbnail">
+                                <img src="img/bg-img/pa2.jpg" alt="">
+                            </div>
+                            <div class="content-">
+                                <p>Aimer</p>
+                            </div>
+                        </div>
+
+                        <!-- Single Artist -->
+                        <div class="single-artists d-flex align-items-center wow fadeInUp" data-wow-delay="200ms">
+                            <div class="thumbnail">
+                                <img src="img/bg-img/pa3.jpg" alt="">
+                            </div>
+                            <div class="content-">
+                                <p>ColdPlay</p>
+                            </div>
+                        </div>
+
+                        <!-- Single Artist -->
+                        <div class="single-artists d-flex align-items-center wow fadeInUp" data-wow-delay="250ms">
+                            <div class="thumbnail">
+                                <img src="img/bg-img/pa4.jpg" alt="">
+                            </div>
+                            <div class="content-">
+                                <p>The Chainsmokers</p>
+                            </div>
+                        </div>
+
+                        <!-- Single Artist -->
+                        <div class="single-artists d-flex align-items-center wow fadeInUp" data-wow-delay="300ms">
+                            <div class="thumbnail">
+                                <img src="img/bg-img/pa5.jpg" alt="">
+                            </div>
+                            <div class="content-">
+                                <p>Low Roar</p>
+                            </div>
+                        </div>
+
+                        <!-- Single Artist -->
+                        <div class="single-artists d-flex align-items-center wow fadeInUp" data-wow-delay="350ms">
+                            <div class="thumbnail">
+                                <img src="img/bg-img/pa6.jpg" alt="">
+                            </div>
+                            <div class="content-">
+                                <p>Ed Shreeran</p>
+                            </div>
+                        </div>
+
+                        <!-- Single Artist -->
+                        <div class="single-artists d-flex align-items-center wow fadeInUp" data-wow-delay="400ms">
+                            <div class="thumbnail">
+                                <img src="img/bg-img/pa7.jpg" alt="">
+                            </div>
+                            <div class="content-">
+                                <p>Jay Chou</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+		<section >  
+		<p style="text-align:center">Listen Now<p>
+			<audio src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/858/outfoxing.mp3" crossorigin="anonymous" ></audio>
+		</section>
+		
+
+	<footer class="footer-area">
+        <div class="container">
+            <div class="row d-flex flex-wrap align-items-center">
+                <div class="col-12 col-md-6">
+                    <a href="127.0.0.1:8787/index"><img src="img/core-img/logo.png" alt=""></a>
+                    <p class="copywrite-text"><a href="#">
+					Copyright @ Kon Yuen Lam</a></p>
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <div class="footer-nav">
+                        <ul>
+                            <li><a href="127.0.0.1:8787/index">Home</a></li>
+                            <li><a href="127.0.0.1:8787/albums">Albums</a></li>
+                            <li><a href="127.0.0.1:8787/contact">Contact</a></li>								
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+ 
+    <!-- ##### All Javascript Script ##### -->
+    <!-- Popper js -->
+   <script src="js/jquery/jquery-2.2.4.min.js"></script>
+    <!-- Popper js -->
+    <script src="js/bootstrap/popper.min.js"></script>
+    <!-- Bootstrap js -->
+    <script src="js/bootstrap/bootstrap.min.js"></script>
+    <!-- All Plugins js -->
+    <script src="js/plugins/plugins.js"></script>
+    <!-- Active js -->
+    <script src="js/active.js"></script>
+</body>
+
+</html>
+  

@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta property="og:url"           content="https://www.your-domain.com/your-page.html" />
+	<meta property="og:type"          content="website" />
+	<meta property="og:title"         content="Your Website Title" />
+	<meta property="og:description"   content="Your description" />
+	<meta property="og:image"         content="https://www.your-domain.com/path/image.jpg" />
+    <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <!-- Title -->
+    <title>i-Music</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="img/core-img/favicon.ico">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+	
+	<script>
+	(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+
+		$(document).ready(function(){   
+	$.ajax({
+
+			/////////////////////////////////////3/7  API/////////////////////////////////////
+			//   [] aray  {} object
+				type: 'GET',
+				url: 'https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=flw&lang=en',
+				dataType:"json",
+				data:"",
+				success: function(data, status, xhr) {
+				alert(JSON.stringify("Welcome to home page today weather :"+data.forecastDesc)); 	
+		
+            },
+            error: function(xhr, status, error) {
+                console.log('Error: ' + error.message);
+            }
+        });
+		
+		  $('#getWeatherForcast').click(function() {
+		// make an ajax call
+		alert($('#formID').serialize());
+    $.ajax({
+          type: 'GET',
+				url: 'https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=flw&lang=en',
+				dataType:"json",
+				data:"",
+				success: function(data, status, xhr) {
+				weatherInformation = "generalSituation :" +data.generalSituation +"<br>forecastPeriod :"+data.forecastPeriod+"<br>outlook :"+data.outlook+"<br>UpdateTime :"+data.updateTime;
+				$("#information").html(weatherInformation)	
+		
+            },
+            error: function(xhr, status, error) {
+                console.log('Error: ' + error.message);
+            }
+        });
+    });
+			});
+		
+	
+	
+	</script>
+	
+</head>
+
+<body>
+    <!-- Preloader -->
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="lds-ellipsis">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+
+    <!-- ##### Header Area Start ##### -->
+    <header class="header-area">
+        <!-- Navbar Area -->
+        <div class="oneMusic-main-menu">
+            <div class="classy-nav-container breakpoint-off">
+                <div class="container">
+                    <!-- Menu -->
+                    <nav class="classy-navbar justify-content-between" id="oneMusicNav">
+
+                        <!-- Nav brand -->
+                        <a href="index.html" class="nav-brand"><img src="img/core-img/logo.png" alt=""></a>
+
+                        <!-- Navbar Toggler -->
+                        <div class="classy-navbar-toggler">
+                            <span class="navbarToggler"><span></span><span></span><span></span></span>
+                        </div>
+
+                        <!-- Menu -->
+                        <div class="classy-menu">
+
+                            <!-- Close Button -->
+                            <div class="classycloseIcon">
+                                <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
+                            </div>
+
+                            <!-- Nav Start -->
+                            <div class="classynav">
+                                <ul><li><a href="http://127.0.0.1:8787/index">Home</a></li>
+                                    <li><a href="http://127.0.0.1:8787/albums">Albums</a></li>
+                                    <li><a href="#">Pages</a>
+                                        <ul class="dropdown">
+                                            <li><a href="index.html">Home</a></li>
+                                            <li><a href="http://127.0.0.1:8787/albums">Albums</a></li>
+                                            <li><a href="http://127.0.0.1:8787/contact">Contact</a></li>          
+                                        </ul>
+                                    </li>
+                                    <li><a href="http://127.0.0.1:8787/contact">Contact</a></li> 
+									<li><a href="http://127.0.0.1:8787/profile">Profile</a></li>
+                                </ul>
+
+                                <!-- Login/Register & Cart Button -->
+                                <div class="login-register-cart-button d-flex align-items-center">
+                                    <!-- Login/Register -->
+                                    <div class="login-register-btn mr-50">
+                                        <a href="http://127.0.0.1:8787/Login">Login / Register</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Nav End -->
+
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- ##### Header Area End ##### -->
+
+    <!-- ##### Hero Area Start ##### -->
+    <section class="hero-area">
+        <div class="hero-slides owl-carousel">
+            <!-- Single Hero Slide -->
+            <div class="single-hero-slide d-flex align-items-center justify-content-center">
+                <!-- Slide Img -->
+                <div class="slide-img bg-img" style="background-image: url(img/bg-img/bg-1.jpg);"></div>
+                <!-- Slide Content -->
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="hero-slides-content text-center">
+                                <h6 data-animation="fadeInUp" data-delay="100ms">Rock band</h6>
+                                <h2 data-animation="fadeInUp" data-delay="300ms">Linkin Park <span>Linkin Park</span></h2>
+                                <a data-animation="fadeInUp" data-delay="500ms" href="https://www.youtube.com/user/linkinparktv" class="btn oneMusic-btn mt-50">Discover <i class="fa fa-angle-double-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Single Hero Slide -->
+            <div class="single-hero-slide d-flex align-items-center justify-content-center">
+                <!-- Slide Img -->
+                <div class="slide-img bg-img" style="background-image: url(img/bg-img/bg-2.jpg);"></div>
+                <!-- Slide Content -->
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="hero-slides-content text-center">
+                                <h6 data-animation="fadeInUp" data-delay="100ms">pop album</h6>
+                                <h2 data-animation="fadeInUp" data-delay="300ms">The Chainsmokers <span>The Chainsmokers</span></h2>
+                                <a data-animation="fadeInUp" data-delay="500ms" href="https://www.youtube.com/user/THECHAINSMOKERS" class="btn oneMusic-btn mt-50">Discover <i class="fa fa-angle-double-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ##### Hero Area End ##### -->
+
+    <!-- ##### Latest Albums Area Start ##### -->
+    <section class="latest-albums-area section-padding-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="section-heading style-2">
+                        <p>See what’s new</p>
+                        <h2>Recommend Pop Albums</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-12 col-lg-9">
+                    <div class="ablums-text text-center mb-70">
+                        <p>Pop is a genre of popular music that originated in its modern form during the mid-1950s in the United States 
+						and the United Kingdom.[4] The terms "popular music" and "pop music" are often used interchangeably, although 
+						the former describes all music that is popular and includes many disparate styles. During the 1950s and 1960s,
+						pop encompassed rock and roll and the youth-oriented styles it influenced. The terms remained roughly synonymous until the late 1960s,
+						after which "pop" became associated with music that was more commercial, ephemeral, and accessible.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="albums-slideshow owl-carousel">
+                        <!-- Single Album -->
+                        <div class="single-album">
+                            <img src="img/bg-img/a1.jpg" alt="">
+                            <div class="album-info">
+                                <a href="https://www.youtube.com/watch?v=RfjPHmgBPF0&list=PLc70MCJNmlIlTCG7GrWwltBI8DIAS5U_r">
+                                    <h5>1989</h5>
+                                </a>
+                                <p>Taylor Swift</p>
+                            </div>
+                        </div>
+
+                        <!-- Single Album -->
+                        <div class="single-album">
+                            <img src="img/bg-img/a2.jpg" alt="">
+                            <div class="album-info">
+                                <a href="https://www.youtube.com/watch?v=pV_76Nc1Ue8">
+                                    <h5>Meteora</h5>
+                                </a>
+                                <p>Linkin Park</p>
+                            </div>
+                        </div>
+
+                        <!-- Single Album -->
+                        <div class="single-album">
+                            <img src="img/bg-img/a3.jpg" alt="">
+                            <div class="album-info">
+                                <a href="https://www.youtube.com/watch?v=P4j2gfNOZOI">
+                                    <h5>Living Things</h5>
+                                </a>
+                                <p>Linkin Park</p>
+                            </div>
+                        </div>
+
+                        <!-- Single Album -->
+                        <div class="single-album">
+                            <img src="img/bg-img/a4.jpg" alt="">
+                            <div class="album-info">
+                                <a href="https://www.youtube.com/watch?v=-qJwU8H8UqQ&t=5s">
+                                    <h5>Once in a Long, Long While...<h5>
+                                </a>
+                                <p>Low Roar</p>
+                            </div>
+                        </div>
+
+                        <!-- Single Album -->
+                        <div class="single-album">
+                            <img src="img/bg-img/a5.jpg" alt="">
+                            <div class="album-info">
+                                <a href="https://www.youtube.com/watch?v=b0nASs9ALkc">
+                                    <h5>0</h5>
+                                </a>
+                                <p>Low Roar</p>
+                            </div>
+                        </div>
+
+                        <!-- Single Album -->
+                        <div class="single-album">
+                            <img src="img/bg-img/a6.jpg" alt="">
+                            <div class="album-info">
+                                <a href="https://www.youtube.com/watch?v=q5N_Qhs2wrs">
+                                    <h5>Dawn</h5>
+                                </a>
+                                <p>Silent Poets</p>
+                            </div>
+                        </div>
+
+                        <!-- Single Album -->
+                        <div class="single-album">
+                            <img src="img/bg-img/a7.jpg" alt="">
+                            <div class="album-info">
+                                <a href="https://www.youtube.com/watch?v=PT2_F-1esPk">
+                                    <h5>Collage</h5>
+                                </a>
+                                <p>The Chainsmokers</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ##### Latest Albums Area End ##### -->
+
+    <!-- ##### Buy Now Area Start ##### -->
+    <section class="oneMusic-buy-now-area has-fluid bg-gray section-padding-100">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="section-heading style-2">
+                        <p>See what’s new</p>
+                        <h2>GAME MUSIC</h2>
+                    </div>
+                </div>
+            </div>
+			  <div class="row justify-content-center">
+                <div class="col-12 col-lg-9">
+                    <div class="ablums-text text-center mb-70">
+                        <p>Video game music is the soundtrack that accompanies video games. Early video game music was once limited to 
+						simple melodies of early sound synthesizer technology. These limitations inspired the style of music known as 
+						chiptunes, which combines simple melodic styles with more complex patterns or traditional music styles, and became 
+						the most popular sound of the first video games.
+
+						With advances in technology, video game music has grown to include the same breadth and complexity associated with 
+						television and film scores, allowing for much more creative freedom. While simple synthesizer pieces are still common,
+						game music now includes full orchestral pieces and popular music. Music in video games can be heard over a game's title screen, 
+						menus, as well as during gameplay. Game soundtracks can also change depending on a player's actions or situation, such as indicating 
+						missed actions in rhythm games, informing the player they are in a dangerous situation or rewarding them for certain achievements</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <!-- Single Album Area -->
+                <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+                    <div class="single-album-area wow fadeInUp" data-wow-delay="100ms">
+                        <div class="album-thumb">
+                            <img src="img/bg-img/b1.jpg" alt="">
+                                 
+                       </div>
+                        <div class="album-info">
+                            <a href="https://www.youtube.com/watch?v=bVavFG7xJ88&list=PL0dW9n9f0Ic3GI7zmB2aB7pyCpJLslH2j">
+                                <h5>Death Stranding</h5>
+                            </a>
+                            <p>Kojima Production</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Single Album Area -->
+                <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+                    <div class="single-album-area wow fadeInUp" data-wow-delay="200ms">
+                        <div class="album-thumb">
+                            <img src="img/bg-img/b2.jpg" alt="">
+                        </div>
+                        <div class="album-info">
+                            <a href="https://www.youtube.com/watch?v=9e7pwv8a-cI">
+                                <h5>Nier: Automata</h5>
+                            </a>
+                            <p>PlatinumGames</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Single Album Area -->
+                <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+                    <div class="single-album-area wow fadeInUp" data-wow-delay="300ms">
+                        <div class="album-thumb">
+                            <img src="img/bg-img/b3.jpg" alt="">
+                        </div>
+                        <div class="album-info">
+                            <a href="https://www.youtube.com/watch?v=PlfGch8mGhg">
+                                <h5>Final Fantasy VII</h5>
+                            </a>
+                            <p>Square</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Single Album Area -->
+                <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+                    <div class="single-album-area wow fadeInUp" data-wow-delay="400ms">
+                        <div class="album-thumb">
+                            <img src="img/bg-img/b4.jpg" alt="">
+                        </div>
+                        <div class="album-info">
+                            <a href="https://www.youtube.com/watch?v=McnMsFwZlvA">
+                                <h5>Red Dead Redemption</h5>
+                            </a>
+                            <p>Rockstar Games</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Single Album Area -->
+                <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+                    <div class="single-album-area wow fadeInUp" data-wow-delay="500ms">
+                        <div class="album-thumb">
+                            <img src="img/bg-img/b5.jpg" alt="">           
+                        </div>
+                        <div class="album-info">
+                            <a href="https://www.youtube.com/watch?v=7NPP6P2FcOM">
+                                <h5>Monster Hunter: World</h5>
+                            </a>
+                            <p>Capcom</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Single Album Area -->
+                <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+                    <div class="single-album-area wow fadeInUp" data-wow-delay="600ms">
+                        <div class="album-thumb">
+                            <img src="img/bg-img/b6.jpg" alt="">
+                        </div>
+                        <div class="album-info">
+                            <a href="https://www.youtube.com/watch?v=NsgLqgk2KYc">
+                                <h5>Metal Gear</h5>
+                            </a>
+                            <p>Konami</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Single Album Area -->
+                <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+                    <div class="single-album-area wow fadeInUp" data-wow-delay="100ms">
+                        <div class="album-thumb">
+                            <img src="img/bg-img/b7.jpg" alt="">
+                        </div>
+                        <div class="album-info">
+                            <a href="https://www.youtube.com/watch?v=DvNF51-TSAQ">
+                                <h5>The Last of Us</h5>
+                            </a>
+                            <p> Naughty Dog</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Single Album Area -->
+                <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+                    <div class="single-album-area wow fadeInUp" data-wow-delay="200ms">
+                        <div class="album-thumb">
+                            <img src="img/bg-img/b8.jpg" alt="">
+                        </div>
+                        <div class="album-info">
+                            <a href="https://www.youtube.com/watch?v=tGeYmC9bK68">
+                                <h5>Bloodborne</h5>
+                            </a>
+                            <p>FromSoftware</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Single Album Area -->
+                <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+                    <div class="single-album-area wow fadeInUp" data-wow-delay="300ms">
+                        <div class="album-thumb">
+                            <img src="img/bg-img/b9.jpg" alt="">                          
+                        </div>
+                        <div class="album-info">
+                            <a href="https://www.youtube.com/watch?v=LTBG-cLNJa0">
+                                <h5>Final Fantasy XV</h5>
+                            </a>
+                            <p>Square Enix</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Single Album Area -->
+                <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+                    <div class="single-album-area wow fadeInUp" data-wow-delay="400ms">
+                        <div class="album-thumb">
+                            <img src="img/bg-img/b10.jpg" alt="">
+                        </div>
+                        <div class="album-info">
+                            <a href="#">
+                                <h5>The Witcher</h5>
+                            </a>
+                            <p>CD Projekt</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Single Album Area -->
+                <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+                    <div class="single-album-area wow fadeInUp" data-wow-delay="500ms">
+                        <div class="album-thumb">
+                            <img src="img/bg-img/b11.jpg" alt="">
+                        </div>
+                        <div class="album-info">
+                            <a href="https://www.youtube.com/watch?v=rOmHpI0MMKE">
+                                <h5>God of War</h5>
+                            </a>
+                            <p>SIE Santa Monica Studio</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Single Album Area -->
+                <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+                    <div class="single-album-area wow fadeInUp" data-wow-delay="600ms">
+                        <div class="album-thumb">
+                            <img src="img/bg-img/b12.jpg" alt="">
+                        </div>
+                        <div class="album-info">
+                            <a href="https://www.youtube.com/watch?v=cMbJxZWAzuA">
+                                <h5>Uncharted</h5>
+                            </a>
+                            <p>Naughty Dog</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+		
+    </section>
+    <!-- ##### Buy Now Area End ##### -->
+
+    <!-- ##### Featured Artist Area Start ##### -->
+    <section class="featured-artist-area section-padding-100 bg-img bg-overlay bg-fixed" style="background-image: url(img/bg-img/bg-4.jpg);">
+        <div class="container">
+            <div class="row align-items-end">
+                <div class="col-12 col-md-5 col-lg-4">
+                    <div class="featured-artist-thumb">
+					<div style="background-color:white" id="information"></div>
+					<button class="btn oneMusic-btn mt-30" id="getWeatherForcast">Get Weather</button>
+                        <img src="img/bg-img/fa.jpg" alt="">
+                    </div>
+                </div>
+                <div class="col-12 col-md-7 col-lg-8">
+                    <div class="featured-artist-content">
+                        <!-- Section Heading -->
+                        <div class="section-heading white text-left mb-30">
+                            <p>See what’s new</p>
+                            <h2>Epic Game music</h2>
+                        </div>
+                        <p>Death Stranding by Kojima Production</p>
+						<iframe width="560" height="315" src="https://www.youtube.com/embed/R2t8pHCbVFc" frameborder="0" 
+						allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+						<div id="fb-root"></div>
+						<div class="fb-share-button" 
+						data-href="http://127.0.0.1:8787/index" 
+						data-layout="button_count">
+						</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ##### Featured Artist Area End ##### -->
+	
+
+	
+
+	
+	
+
+    <!-- ##### Footer Area Start ##### -->
+    <footer class="footer-area">
+        <div class="container">
+            <div class="row d-flex flex-wrap align-items-center">
+                <div class="col-12 col-md-6">
+                    <a href="127.0.0.1:8787/index"><img src="img/core-img/logo.png" alt=""></a>
+                    <p class="copywrite-text"><a href="#"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+Copyright @ Kon Yuen Lam</a>
+<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <div class="footer-nav">
+                        <ul>
+                            <li><a href="127.0.0.1:8787/index">Home</a></li>
+                            <li><a href="127.0.0.1:8787/albums">Albums</a></li>
+                            <li><a href="127.0.0.1:8787/contact">Contact</a></li>						
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- ##### Footer Area Start ##### -->
+
+    <!-- ##### All Javascript Script ##### -->
+    <!-- jQuery-2.2.4 js -->
+    <script src="js/jquery/jquery-2.2.4.min.js"></script>
+    <!-- Popper js -->
+    <script src="js/bootstrap/popper.min.js"></script>
+    <!-- Bootstrap js -->
+    <script src="js/bootstrap/bootstrap.min.js"></script>
+    <!-- All Plugins js -->
+    <script src="js/plugins/plugins.js"></script>
+    <!-- Active js -->
+    <script src="js/active.js"></script>
+</body>
+
+</html>
